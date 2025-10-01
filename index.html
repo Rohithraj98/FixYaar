@@ -7,139 +7,111 @@
   <style>
     /* Reset */
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      background: transparent; 
       color: #fff;
       text-align: center;
       line-height: 1.6;
+      position: relative;
+      min-height: 100vh; 
+      z-index: 1;
     }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url('background.webp'); 
+      background-size: cover;
+      background-position: center;
+      filter: blur(5px);
+      z-index: -2;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(15,32,39,0.9), rgba(32,58,67,0.9), rgba(44,83,100,0.9));
+      z-index: -1;
+    }
+
     section { padding: 60px 20px; }
-
-    /* Logo */
     .logo { width: 100px; margin: 0 auto 20px; display: block; border-radius: 50%; }
-
-    /* Gradient Title */
     h1, h2 { font-weight: 800; margin-bottom: 15px; }
-    h1 {
-      font-size: 3rem;
-      background: linear-gradient(90deg, #7b2ff7, #f107a3);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    h2 span {
-      background: linear-gradient(90deg, #7b2ff7, #f107a3);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    h1 { font-size: 3rem; background: linear-gradient(90deg,#7b2ff7,#f107a3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    h2 span { background: linear-gradient(90deg,#7b2ff7,#f107a3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     p { color: #ddd; }
 
-    /* Buttons */
     .btn-container { display: flex; justify-content: center; gap: 15px; margin: 30px 0; flex-wrap: wrap; }
-    .btn {
-      padding: 12px 25px; border-radius: 30px; font-weight: bold;
-      border: none; cursor: pointer; transition: 0.3s; font-size: 1rem;
-    }
-    .btn-primary {
-      background: linear-gradient(90deg, #7b2ff7, #f107a3); color: #fff;
-      box-shadow: 0 4px 15px rgba(123,47,247,0.4);
-    }
+    .btn { padding: 12px 25px; border-radius: 30px; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+    .btn-primary { background: linear-gradient(90deg,#7b2ff7,#f107a3); color: #fff; box-shadow: 0 4px 15px rgba(123,47,247,0.4); }
     .btn-primary:hover { opacity: 0.9; }
     .btn-outline { border: 2px solid #00aaff; background: transparent; color: #00aaff; }
     .btn-outline:hover { background: #00aaff; color: #fff; }
 
-    /* Services Section */
-    .services-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px; margin-top: 30px;
-    }
-    .service-card {
-      background: rgba(255,255,255,0.05);
-      padding: 20px; border-radius: 12px; text-align: left;
-    }
-    .service-card h3 { margin-bottom: 10px; font-size: 1.2rem; }
-    .service-card p { font-size: 0.9rem; color: #bbb; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap:20px; margin-top:30px; }
+    .service-card { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; text-align: left; }
+    .service-card h3 { margin-bottom:10px; font-size:1.2rem; }
+    .service-card p { font-size:0.9rem; color:#bbb; }
 
-    /* How It Works */
-    .steps {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px; margin-top: 30px;
-    }
-    .step-card {
-      background: rgba(255,255,255,0.05);
-      padding: 20px; border-radius: 12px; position: relative;
-    }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top:30px; }
+    .step-card { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; position: relative; }
     .step-card h3 { margin-bottom: 10px; }
-    .step-number {
-      position: absolute; top: -10px; right: -10px;
-      background: #7b2ff7; color: #fff; font-size: 0.9rem;
-      font-weight: bold; padding: 8px 12px; border-radius: 50%;
-    }
+    .step-number { position: absolute; top:-10px; right:-10px; background:#7b2ff7; color:#fff; font-size:0.9rem; font-weight:bold; padding:8px 12px; border-radius:50%; }
 
-    /* Footer */
-    footer {
-      background: rgba(0,0,0,0.4); padding: 40px 20px; text-align: left;
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px;
-    }
-    footer h3 { margin-bottom: 15px; color: #fff; }
+    footer { background: rgba(0,0,0,0.4); padding:40px 20px; text-align:left; display:grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap:30px; }
+    footer h3 { margin-bottom: 15px; color:#fff; }
     footer ul { list-style: none; }
-    footer ul li { margin-bottom: 8px; color: #ccc; }
-    footer ul li a { color: #ccc; text-decoration: none; transition: 0.3s; }
-    footer ul li a:hover { color: #fff; }
-    footer .footer-logo { display: flex; align-items: center; gap: 10px; }
-    footer .footer-logo img { width: 50px; border-radius: 50%; }
+    footer ul li { margin-bottom:8px; color:#ccc; }
+    footer ul li a { color:#ccc; text-decoration:none; transition:0.3s; }
+    footer ul li a:hover { color:#fff; }
+    footer .footer-logo { display:flex; align-items:center; gap:10px; }
+    footer .footer-logo img { width:50px; border-radius:50%; }
 
-    /* WhatsApp Popup */
-    .popup-overlay {
+    .popup-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); display:none; justify-content:center; align-items:center; z-index:999; }
+    .popup-content { background:#111; padding:30px; border-radius:12px; text-align:center; color:#fff; max-width:400px; width:90%; position:relative; }
+    .popup-content img { margin-top:10px; }
+    .popup-content .close { position:absolute; top:10px; right:15px; font-size:1.5rem; cursor:pointer; color:#fff; }
+    input, select { margin: 5px 0; padding:8px; width:90%; border-radius:5px; border:none; }
+
+    /* Toast message */
+    #toast {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.7);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(90deg,#7b2ff7,#f107a3);
+      color: #fff;
+      padding: 15px 25px;
+      border-radius: 30px;
+      box-shadow: 0 4px 15px rgba(123,47,247,0.4);
+      font-weight: bold;
       display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-    .popup-content {
-      background: #111;
-      padding: 30px;
-      border-radius: 12px;
+      z-index: 1000;
       text-align: center;
-      color: #fff;
-      max-width: 400px;
-      width: 90%;
-      position: relative;
-    }
-    .popup-content img { margin-top: 10px; }
-    .popup-content .close {
-      position: absolute;
-      top: 10px; right: 15px;
-      font-size: 1.5rem; cursor: pointer;
-      color: #fff;
     }
   </style>
 </head>
 <body>
 
-  <!-- Hero Section -->
+  <!-- Main Header Section -->
   <section>
     <img src="logo2.jpeg" alt="FixYaar Logo" class="logo">
     <h1>FIXYAAR</h1>
     <h2>Your Vehicle, Our Expertise</h2>
     <p>Professional doorstep vehicle repair and maintenance. We bring the workshop to you—anywhere, anytime.</p>
-    
-    <!-- Buttons -->
     <div class="btn-container">
-      <button class="btn btn-primary" id="bookServiceBtn">
-        🚗/🏍️ Book Service Now
-        <br>
-      </button>
+      <button class="btn btn-primary" id="bookServiceBtn">🚗/🏍️ Book Service Now</button>
       <button class="btn btn-outline">📞 Emergency: +91-99529-19265</button>
     </div>
   </section>
 
-  <!-- What We Offer -->
+  <!-- Services Section -->
   <section>
     <h2>What We <span>Offer</span></h2>
     <p>Comprehensive vehicle care services designed for your convenience</p>
@@ -152,7 +124,7 @@
     </div>
   </section>
 
-  <!-- How It Works -->
+  <!-- How It Works Section -->
   <section>
     <h2>How It <span>Works</span></h2>
     <p>Getting your vehicle fixed has never been easier</p>
@@ -167,10 +139,7 @@
   <!-- Footer -->
   <footer>
     <div>
-      <div class="footer-logo">
-        <img src="logo2.jpeg" alt="FixYaar Logo">
-        <h3>FIXYAAR</h3>
-      </div>
+      <div class="footer-logo"><img src="logo2.jpeg" alt="FixYaar Logo"><h3>FIXYAAR</h3></div>
       <p>Professional doorstep vehicle repair and maintenance services across Hyderabad.</p>
     </div>
     <div>
@@ -184,7 +153,7 @@
     <div>
       <h3>Company</h3>
       <ul>
-        <li><a href="#">About Us</a></li>
+        <li><a href="about.html">About Us</a></li>
       </ul>
     </div>
     <div>
@@ -195,54 +164,30 @@
       </ul>
     </div>
     <div class="btn-container">
-      <button class="btn btn-primary" id="joinMechanicBtn">
-        Join as Mechanic
-        <br>
-      </button>
+      <button class="btn btn-primary" id="joinMechanicBtn">Join as Mechanic</button>
     </div>
   </footer>
 
   <!-- Mechanic Form Popup -->
-<div id="mechanicPopup" class="popup-overlay">
-  <div class="popup-content">
-    <span class="close" id="closeMechanic">&times;</span>
-    <h3>Join as Mechanic</h3>
-    <form id="mechanicForm">
-      <input type="text" placeholder="Full Name" required style="width: 90%; padding:8px; margin:5px 0;">
-      <input type="text" placeholder="Phone Number" required style="width: 90%; padding:8px; margin:5px 0;">
-      <input type="text" placeholder="Vehicle Service (2W/4W)" required style="width: 90%; padding:8px; margin:5px 0;">
-      <input type="text" placeholder="Hyd Area" required style="width: 90%; padding:8px; margin:5px 0;">
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+  <div id="mechanicPopup" class="popup-overlay">
+    <div class="popup-content">
+      <span class="close" id="closeMechanic">&times;</span>
+      <h3>Join as Mechanic</h3>
+      <form id="mechanicForm">
+        <input type="text" placeholder="Full Name" name="name" pattern="[A-Za-z ]{2,50}" title="Name can contain only letters and spaces" required>
+        <input type="text" placeholder="Phone Number" name="phone" pattern="[0-9]{10}" title="Phone number must be 10 digits" required>
+        <select name="vehicle" required>
+          <option value="">Select Vehicle Type</option>
+          <option value="2W">2 Wheeler</option>
+          <option value="4W">4 Wheeler</option>
+        </select>
+        <input type="text" placeholder="Hyd Area" name="area" required>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
   </div>
-</div>
 
-<!-- JS for Mechanic Popup -->
-<script>
-  const joinBtn = document.getElementById("joinMechanicBtn");
-  const mechanicPopup = document.getElementById("mechanicPopup");
-  const closeMechanic = document.getElementById("closeMechanic");
-
-  // Show Mechanic Popup
-  joinBtn.addEventListener("click", () => { mechanicPopup.style.display = "flex"; });
-
-  // Close Mechanic Popup
-  closeMechanic.addEventListener("click", () => { mechanicPopup.style.display = "none"; });
-
-  // Close when clicking outside popup content
-  window.addEventListener("click", (e) => {
-    if (e.target === mechanicPopup) mechanicPopup.style.display = "none";
-  });
-
-  // Form Submission
-  document.getElementById("mechanicForm").addEventListener("submit", (e) => {
-    e.preventDefault();
-    alert("Thank you! We will contact you soon.");
-    mechanicPopup.style.display = "none";
-  });
-</script>
-
-  <!-- WhatsApp QR Popup -->
+  <!-- WhatsApp Popup -->
   <div id="whatsappPopup" class="popup-overlay">
     <div class="popup-content">
       <span class="close" id="closeWhatsApp">&times;</span>
@@ -252,23 +197,76 @@
     </div>
   </div>
 
-  <!-- JS -->
+  <!-- Toast -->
+  <div id="toast">Thank you! We Will Contact you soon!</div>
+
   <script>
+    const joinBtn = document.getElementById("joinMechanicBtn");
+    const mechanicPopup = document.getElementById("mechanicPopup");
+    const closeMechanic = document.getElementById("closeMechanic");
+
+    joinBtn.addEventListener("click", () => { mechanicPopup.style.display = "flex"; });
+    closeMechanic.addEventListener("click", () => { mechanicPopup.style.display = "none"; });
+    window.addEventListener("click", (e) => { if(e.target === mechanicPopup) mechanicPopup.style.display = "none"; });
+
     const bookBtn = document.getElementById("bookServiceBtn");
     const whatsappPopup = document.getElementById("whatsappPopup");
     const closeWhatsApp = document.getElementById("closeWhatsApp");
-
-    // Show WhatsApp Popup
     bookBtn.addEventListener("click", () => { whatsappPopup.style.display = "flex"; });
-
-    // Close WhatsApp Popup
     closeWhatsApp.addEventListener("click", () => { whatsappPopup.style.display = "none"; });
+    window.addEventListener("click", (e) => { if(e.target === whatsappPopup) whatsappPopup.style.display = "none"; });
 
-    // Close when clicking outside popup content
-    window.addEventListener("click", (e) => {
-      if (e.target === whatsappPopup) whatsappPopup.style.display = "none";
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbylOQGWp4LYlY5pguoUAQw_B06H0MCRiH-gAs3bJdd6AZE-Kvy2HQF0Tfdc-coohosVDg/exec";
+
+    document.getElementById("mechanicForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+
+      const name = form.name.value.trim();
+      const phone = form.phone.value.trim();
+      const vehicle = form.vehicle.value;
+      const area = form.area.value.trim();
+
+      // JS Validations
+      if(!/^[A-Za-z ]{2,50}$/.test(name)){
+        alert("Name can contain only letters and spaces");
+        return;
+      }
+      if(!/^[0-9]{10}$/.test(phone)){
+        alert("Phone number must be exactly 10 digits");
+        return;
+      }
+      if(!vehicle){
+        alert("Please select a vehicle type");
+        return;
+      }
+      if(area.length < 2){
+        alert("Please enter a valid area");
+        return;
+      }
+
+      // Send data to Google Sheet
+      const data = { name, phone, vehicle, area };
+      try {
+        const res = await fetch(SHEET_URL, {
+          method: 'POST',
+          body: JSON.stringify(data)
+        });
+        const result = await res.json();
+        if(result.status === 'success'){
+          mechanicPopup.style.display = "none";
+          form.reset();
+          const toast = document.getElementById("toast");
+          toast.style.display = "block";
+          setTimeout(() => { toast.style.display = "none"; }, 3000);
+        } else {
+          alert('Something went wrong. Try again.');
+        }
+      } catch (err) {
+        alert('Error saving data.');
+        console.error(err);
+      }
     });
   </script>
-
 </body>
 </html>
