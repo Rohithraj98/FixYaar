@@ -200,6 +200,7 @@
   <!-- Toast -->
   <div id="toast">Thank you! We Will Contact you soon!</div>
 
+  <!-- Replace your old <script> block with this -->
   <script>
     const joinBtn = document.getElementById("joinMechanicBtn");
     const mechanicPopup = document.getElementById("mechanicPopup");
@@ -212,15 +213,17 @@
     const bookBtn = document.getElementById("bookServiceBtn");
     const whatsappPopup = document.getElementById("whatsappPopup");
     const closeWhatsApp = document.getElementById("closeWhatsApp");
+
     bookBtn.addEventListener("click", () => { whatsappPopup.style.display = "flex"; });
     closeWhatsApp.addEventListener("click", () => { whatsappPopup.style.display = "none"; });
     window.addEventListener("click", (e) => { if(e.target === whatsappPopup) whatsappPopup.style.display = "none"; });
 
     const SHEET_URL = "https://script.google.com/macros/s/AKfycbylOQGWp4LYlY5pguoUAQw_B06H0MCRiH-gAs3bJdd6AZE-Kvy2HQF0Tfdc-coohosVDg/exec";
+    const form = document.getElementById("mechanicForm");
+    const toast = document.getElementById("toast");
 
-    document.getElementById("mechanicForm").addEventListener("submit", async (e) => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const form = e.target;
 
       const name = form.name.value.trim();
       const phone = form.phone.value.trim();
@@ -228,44 +231,25 @@
       const area = form.area.value.trim();
 
       // JS Validations
-      if(!/^[A-Za-z ]{2,50}$/.test(name)){
-        alert("Name can contain only letters and spaces");
-        return;
-      }
-      if(!/^[0-9]{10}$/.test(phone)){
-        alert("Phone number must be exactly 10 digits");
-        return;
-      }
-      if(!vehicle){
-        alert("Please select a vehicle type");
-        return;
-      }
-      if(area.length < 2){
-        alert("Please enter a valid area");
-        return;
-      }
+      if(!/^[A-Za-z ]{2,50}$/.test(name)){ alert("Name can contain only letters and spaces"); return; }
+      if(!/^[0-9]{10}$/.test(phone)){ alert("Phone number must be exactly 10 digits"); return; }
+      if(!vehicle){ alert("Please select a vehicle type"); return; }
+      if(area.length < 2){ alert("Please enter a valid area"); return; }
 
-      // Send data to Google Sheet
-      const data = { name, phone, vehicle, area };
-      try {
-        const res = await fetch(SHEET_URL, {
-          method: 'POST',
-          body: JSON.stringify(data)
-        });
-        const result = await res.json();
-        if(result.status === 'success'){
-          mechanicPopup.style.display = "none";
-          form.reset();
-          const toast = document.getElementById("toast");
-          toast.style.display = "block";
-          setTimeout(() => { toast.style.display = "none"; }, 3000);
-        } else {
-          alert('Something went wrong. Try again.');
-        }
-      } catch (err) {
-        alert('Error saving data.');
-        console.error(err);
-      }
+      // ✅ Show success instantly
+      mechanicPopup.style.display = "none";
+      form.reset();
+      toast.style.display = "block";
+      setTimeout(() => { toast.style.display = "none"; }, 3000);
+
+      // ✅ Save data in background asynchronously
+      fetch(SHEET_URL, {
+        method: 'POST',
+        body: JSON.stringify({ name, phone, vehicle, area })
+      })
+      .then(res => res.json())
+      .then(result => console.log("Saved:", result))
+      .catch(err => console.error("Error saving:", err));
     });
   </script>
 </body>
